@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pulse Protector - Health monitoring and emergency response application for medical professionals and patients.">
+  <meta name="keywords" content="Pulse Protector, Health Monitoring, Healthcare App, IoT, Medical Technology">
+  <meta name="author" content="Denvil">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="logo/pulse-protector-3d.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <title>Pulse Protector - Denvil</title>
+  
+  <style>
+    .pulse-hero {
+      text-align: center;
+      padding: 4rem 0;
+      position: relative;
+    }
+    
+    .pulse-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%);
+      filter: blur(60px);
+      z-index: -1;
+    }
+    
+    .pulse-logo {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 2rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      border-radius: 50%;
+      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.5);
+      animation: pulse-anim 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-anim {
+      0%, 100% { transform: scale(1); box-shadow: 0 20px 60px rgba(239, 68, 68, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 25px 80px rgba(239, 68, 68, 0.7); }
+    }
+    
+    .pulse-logo img {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    
+    .feature-card {
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));
+      border-radius: 16px;
+      font-size: 1.75rem;
+    }
+    
+    .feature-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .vitals-demo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .vital-card {
+      padding: 1.5rem;
+      text-align: center;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--border-radius-md);
+    }
+    
+    .vital-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .vital-label {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+    
+    .vital-status {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    
+    .vital-status.normal { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .vital-status.warning { background: rgba(234, 179, 8, 0.2); color: #eab308; }
+    .vital-status.critical { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    
+    .timeline-section {
+      margin: 3rem 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="background-effects" aria-hidden="true">
+    <div class="gradient-mesh"></div>
+    <div class="aurora"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="particles-container" id="particles"></div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition"></div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Navigation -->
+    <header>
+      <nav class="nav-header" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="nav-logo" aria-label="Denvil Home">
+          <img src="logo/denvil-3d-element.svg" alt="" width="50" height="50" loading="eager">
+          <span>Denvil</span>
+        </a>
+        
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="nexus.html">Nexus AI</a></li>
+          <li><a href="stats.html">Stats</a></li>
+        </ul>
+        
+        <div class="flex items-center gap-2">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.8.8 0 0 1-.8.8h-2.4a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zM4 12a.8.8 0 0 1-.8.8H.8a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zm16.5-8.5a.8.8 0 0 1 0 1.1l-1.7 1.7a.8.8 0 1 1-1.1-1.1l1.7-1.7a.8.8 0 0 1 1.1 0zm-15 15a.8.8 0 0 1 0 1.1l-1.7 1.7a.8.8 0 0 1-1.1-1.1l1.7-1.7a.8.8 0 0 1 1.1 0zM20.5 20.5a.8.8 0 0 1-1.1 0l-1.7-1.7a.8.8 0 0 1 1.1-1.1l1.7 1.7a.8.8 0 0 1 0 1.1zM5.5 5.5a.8.8 0 0 1-1.1 0L2.7 3.8a.8.8 0 0 1 1.1-1.1l1.7 1.7a.8.8 0 0 1 0 1.1zM12 0a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0V.8A.8.8 0 0 1 12 0zm0 20a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0v-2.4a.8.8 0 0 1 .8-.8z"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.1 22c-5 0-9.1-4.1-9.1-9.1 0-4.7 3.5-8.6 8.2-9.2.3 0 .6.1.8.4.2.3.1.6-.1.9-1.4 2-1.8 4.4-1 6.7s2.8 4.1 5.2 4.8c.4.1.7.4.6.8-.1.4-.3.7-.7.8-1.2.6-2.5.9-3.9.9zm-1.8-16c-2.8 1.1-4.8 3.9-4.8 7 0 4.1 3.4 7.5 7.5 7.5.9 0 1.8-.2 2.6-.5-2-.9-3.6-2.6-4.3-4.7-.7-2.1-.5-4.3.5-6.3z"/>
+            </svg>
+          </button>
+          
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="pulse-hero scroll-reveal">
+        <div class="pulse-logo">
+          <img src="logo/pulse-protector-3d.svg" alt="Pulse Protector Logo" loading="eager">
+        </div>
+        <h1 class="hero-title">
+          <span class="text-gradient" style="background: linear-gradient(135deg, #ef4444, #f97316); -webkit-background-clip: text; background-clip: text;">Pulse Protector</span>
+        </h1>
+        <p class="hero-subtitle">
+          Advanced health monitoring and emergency response system designed for 
+          medical professionals and patients. Real-time vitals, smart alerts, and life-saving technology.
+        </p>
+        <div class="project-tags" style="justify-content: center; margin-top: 1rem;">
+          <span class="tag">Healthcare</span>
+          <span class="tag">IoT</span>
+          <span class="tag">React Native</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">2024</span>
+        </div>
+      </section>
+
+      <!-- Live Vitals Demo -->
+      <section class="glass-card scroll-reveal" style="padding: 2rem;">
+        <h2 class="project-title" style="text-align: center; margin-bottom: 1rem;">📊 Live Vitals Dashboard Demo</h2>
+        <p class="text-secondary" style="text-align: center; margin-bottom: 2rem;">
+          Real-time health monitoring at your fingertips
+        </p>
+        <div class="vitals-demo">
+          <div class="vital-card">
+            <div class="vital-value" id="heartRate">72</div>
+            <div class="vital-label">Heart Rate (BPM)</div>
+            <span class="vital-status normal">Normal</span>
+          </div>
+          <div class="vital-card">
+            <div class="vital-value">98</div>
+            <div class="vital-label">SpO2 (%)</div>
+            <span class="vital-status normal">Normal</span>
+          </div>
+          <div class="vital-card">
+            <div class="vital-value">120/80</div>
+            <div class="vital-label">Blood Pressure</div>
+            <span class="vital-status normal">Normal</span>
+          </div>
+          <div class="vital-card">
+            <div class="vital-value">36.6</div>
+            <div class="vital-label">Temperature (°C)</div>
+            <span class="vital-status normal">Normal</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Grid -->
+      <section class="feature-grid scroll-reveal">
+        <article class="glass-card feature-card card-prism">
+          <div class="feature-icon">❤️</div>
+          <h3 class="feature-title">Real-time Monitoring</h3>
+          <p class="feature-description">
+            Continuous monitoring of vital signs with instant updates and 
+            historical data tracking for trend analysis.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-prism">
+          <div class="feature-icon">🚨</div>
+          <h3 class="feature-title">Smart Alerts</h3>
+          <p class="feature-description">
+            Intelligent alert system that notifies caregivers and emergency 
+            contacts when vitals fall outside safe ranges.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-prism">
+          <div class="feature-icon">📱</div>
+          <h3 class="feature-title">Mobile App</h3>
+          <p class="feature-description">
+            Native mobile application for both iOS and Android, ensuring 
+            access to health data anywhere, anytime.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-prism">
+          <div class="feature-icon">🔗</div>
+          <h3 class="feature-title">IoT Integration</h3>
+          <p class="feature-description">
+            Seamless integration with wearable devices and medical-grade 
+            sensors for accurate data collection.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-prism">
+          <div class="feature-icon">👨‍⚕️</div>
+          <h3 class="feature-title">Doctor Dashboard</h3>
+          <p class="feature-description">
+            Comprehensive dashboard for healthcare providers to monitor 
+            multiple patients and access detailed reports.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-prism">
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">HIPAA Compliant</h3>
+          <p class="feature-description">
+            Built with security and privacy in mind, ensuring all health 
+            data is protected and compliant with regulations.
+          </p>
+        </article>
+      </section>
+
+      <!-- Technology Stack -->
+      <section class="glass-card scroll-reveal" style="padding: 2rem;">
+        <h2 class="project-title">Technology Stack</h2>
+        <div class="bento-grid" style="margin-top: 1.5rem;">
+          <div class="bento-item span-3" style="padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚛️</div>
+            <strong>React Native</strong>
+            <p class="text-muted" style="font-size: 0.8rem;">Cross-platform mobile development</p>
+          </div>
+          <div class="bento-item span-3" style="padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔥</div>
+            <strong>Firebase</strong>
+            <p class="text-muted" style="font-size: 0.8rem;">Real-time database & authentication</p>
+          </div>
+          <div class="bento-item span-3" style="padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📡</div>
+            <strong>BLE</strong>
+            <p class="text-muted" style="font-size: 0.8rem;">Bluetooth Low Energy for devices</p>
+          </div>
+          <div class="bento-item span-3" style="padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">☁️</div>
+            <strong>Cloud Functions</strong>
+            <p class="text-muted" style="font-size: 0.8rem;">Serverless backend processing</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Use Cases -->
+      <section class="bento-grid scroll-reveal" style="margin-top: 3rem;">
+        <article class="bento-item span-6 glass-card card-sweep">
+          <div class="project-card">
+            <h3 class="project-title">For Patients</h3>
+            <p class="project-description">
+              Take control of your health with continuous monitoring. Track your 
+              vitals, set personal goals, and share data with your healthcare team.
+            </p>
+            <ul style="color: var(--text-secondary); margin-top: 1rem;">
+              <li>✓ Personal health dashboard</li>
+              <li>✓ Medication reminders</li>
+              <li>✓ Emergency SOS button</li>
+              <li>✓ Health trend analysis</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="bento-item span-6 glass-card card-sweep">
+          <div class="project-card">
+            <h3 class="project-title">For Healthcare Providers</h3>
+            <p class="project-description">
+              Monitor patients remotely, receive critical alerts, and access 
+              comprehensive health reports to provide better care.
+            </p>
+            <ul style="color: var(--text-secondary); margin-top: 1rem;">
+              <li>✓ Multi-patient monitoring</li>
+              <li>✓ Customizable alert thresholds</li>
+              <li>✓ Detailed analytics</li>
+              <li>✓ Secure communication</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- Project Status -->
+      <section class="glass-card scroll-reveal" style="padding: 2rem; margin-top: 3rem; text-align: center;">
+        <h2 class="project-title">Project Status</h2>
+        <p class="text-secondary" style="margin: 1rem 0 2rem;">
+          Pulse Protector is currently in active development, with the goal of 
+          creating an accessible, reliable health monitoring solution.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+          <div>
+            <div class="stat-number">70%</div>
+            <div class="stat-label">Development Complete</div>
+          </div>
+          <div>
+            <div class="stat-number">Q2 2025</div>
+            <div class="stat-label">Expected Beta</div>
+          </div>
+          <div>
+            <div class="stat-number">2024</div>
+            <div class="stat-label">Project Started</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Project Reactions -->
+      <section class="glass-card scroll-reveal" style="text-align: center; padding: 2rem; margin-top: 3rem;">
+        <h3 class="project-title">What do you think of Pulse Protector?</h3>
+        <div class="reactions" data-project="pulse-protector" style="justify-content: center; margin-top: 1rem;">
+          <button class="reaction-btn" data-reaction="love" aria-label="Love this project">
+            <span class="emoji">❤️</span>
+            <span class="count">0</span>
+          </button>
+          <button class="reaction-btn" data-reaction="clap" aria-label="Applaud this project">
+            <span class="emoji">👏</span>
+            <span class="count">0</span>
+          </button>
+          <button class="reaction-btn" data-reaction="rocket" aria-label="To the moon">
+            <span class="emoji">🚀</span>
+            <span class="count">0</span>
+          </button>
+          <button class="reaction-btn" data-reaction="star" aria-label="Star this project">
+            <span class="emoji">⭐</span>
+            <span class="count">0</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="nexus.html">Nexus AI</a>
+        <a href="stats.html">Stats</a>
+        <a href="https://github.com/DenxVil" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copyright">
+        &copy; <span id="currentYear">2025</span> Denvil. Built with ❤️ and lots of ☕
+      </p>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/magnetic.js" defer></script>
+  <script src="assets/js/reactions.js" defer></script>
+  <script src="assets/js/transitions.js" defer></script>
+  <script>
+    // Simulate live heart rate updates
+    function updateHeartRate() {
+      const heartRateEl = document.getElementById('heartRate');
+      if (heartRateEl) {
+        const baseRate = 72;
+        const variation = Math.floor(Math.random() * 8) - 4;
+        heartRateEl.textContent = baseRate + variation;
+      }
+    }
+    setInterval(updateHeartRate, 2000);
+  </script>
+</body>
+</html>
