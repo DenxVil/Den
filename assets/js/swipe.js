@@ -6,6 +6,8 @@
 (function() {
   'use strict';
 
+  // Main navigation pages (matches nav menu order)
+  // Note: Sub-pages like pulse-protector.html are intentionally excluded
   const pages = [
     'index.html',
     'projects.html',
