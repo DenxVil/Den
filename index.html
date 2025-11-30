@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Denvil - Medical Student & Developer. Creating innovative projects at the intersection of medicine and technology.">
+  <meta name="keywords" content="Denvil, Developer, Medical Student, Portfolio, Projects, Nexus AI, Dark Userbot">
+  <meta name="author" content="Denvil">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://denvil.github.io/">
+  <meta property="og:title" content="Denvil - Medical Student & Developer">
+  <meta property="og:description" content="Creating innovative projects at the intersection of medicine and technology.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="logo/denvil-3d-element.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <title>Denvil - Medical Student & Developer</title>
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="background-effects" aria-hidden="true">
+    <div class="gradient-mesh"></div>
+    <div class="aurora"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="particles-container" id="particles"></div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition"></div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Navigation -->
+    <header>
+      <nav class="nav-header" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="nav-logo" aria-label="Denvil Home">
+          <img src="logo/denvil-3d-element.svg" alt="" width="50" height="50" loading="eager">
+          <span>Denvil</span>
+        </a>
+        
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="nexus.html">Nexus AI</a></li>
+          <li><a href="stats.html">Stats</a></li>
+        </ul>
+        
+        <div class="flex items-center gap-2">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.8.8 0 0 1-.8.8h-2.4a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zM4 12a.8.8 0 0 1-.8.8H.8a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zm16.5-8.5a.8.8 0 0 1 0 1.1l-1.7 1.7a.8.8 0 1 1-1.1-1.1l1.7-1.7a.8.8 0 0 1 1.1 0zm-15 15a.8.8 0 0 1 0 1.1l-1.7 1.7a.8.8 0 0 1-1.1-1.1l1.7-1.7a.8.8 0 0 1 1.1 0zM20.5 20.5a.8.8 0 0 1-1.1 0l-1.7-1.7a.8.8 0 0 1 1.1-1.1l1.7 1.7a.8.8 0 0 1 0 1.1zM5.5 5.5a.8.8 0 0 1-1.1 0L2.7 3.8a.8.8 0 0 1 1.1-1.1l1.7 1.7a.8.8 0 0 1 0 1.1zM12 0a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0V.8A.8.8 0 0 1 12 0zm0 20a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0v-2.4a.8.8 0 0 1 .8-.8z"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.1 22c-5 0-9.1-4.1-9.1-9.1 0-4.7 3.5-8.6 8.2-9.2.3 0 .6.1.8.4.2.3.1.6-.1.9-1.4 2-1.8 4.4-1 6.7s2.8 4.1 5.2 4.8c.4.1.7.4.6.8-.1.4-.3.7-.7.8-1.2.6-2.5.9-3.9.9zm-1.8-16c-2.8 1.1-4.8 3.9-4.8 7 0 4.1 3.4 7.5 7.5 7.5.9 0 1.8-.2 2.6-.5-2-.9-3.6-2.6-4.3-4.7-.7-2.1-.5-4.3.5-6.3z"/>
+            </svg>
+          </button>
+          
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section scroll-reveal">
+      <h1 class="hero-title">
+        Hi, I'm <span class="text-gradient">Denvil</span>
+      </h1>
+      <p class="hero-subtitle">
+        <span class="typewriter" id="typewriter">Medical Student & Developer</span>
+      </p>
+      <p class="hero-subtitle text-secondary">
+        Building innovative solutions at the intersection of medicine and technology.
+        Creating tools that make a difference.
+      </p>
+      <div class="flex justify-center gap-2 mt-3">
+        <a href="projects.html" class="btn btn-primary btn-magnetic">
+          <span>View Projects</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="https://github.com/DenxVil" class="btn btn-secondary btn-magnetic" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Bento Grid Layout -->
+    <main class="bento-grid">
+      
+      <!-- Featured Project: Nexus AI -->
+      <article class="bento-item span-8 glass-card hero-project card-holographic card-spotlight tilt-3d scroll-reveal" data-project="nexus-ai">
+        <div class="tilt-3d-inner project-card">
+          <div class="project-icon">
+            <img src="logo/nexus-ai-3d.svg" alt="" width="36" height="36" loading="lazy">
+          </div>
+          <h2 class="project-title">Nexus AI</h2>
+          <p class="project-description">
+            An advanced AI-powered Telegram bot featuring intelligent conversations, 
+            image generation, code assistance, and more. Experience the future of 
+            AI-powered communication.
+          </p>
+          <div class="project-tags">
+            <span class="tag">AI/ML</span>
+            <span class="tag">Telegram Bot</span>
+            <span class="tag">Python</span>
+            <span class="tag">Featured</span>
+          </div>
+          <div class="project-links">
+            <a href="nexus.html" class="btn btn-primary btn-magnetic">Learn More</a>
+            <a href="https://t.me/NexusAiProbot" class="btn btn-glass btn-magnetic" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+              <span>Try Bot</span>
+            </a>
+          </div>
+          <div class="reactions" data-project="nexus-ai">
+            <button class="reaction-btn" data-reaction="love" aria-label="Love this project">
+              <span class="emoji">❤️</span>
+              <span class="count">0</span>
+            </button>
+            <button class="reaction-btn" data-reaction="fire" aria-label="This is fire">
+              <span class="emoji">🔥</span>
+              <span class="count">0</span>
+            </button>
+            <button class="reaction-btn" data-reaction="rocket" aria-label="To the moon">
+              <span class="emoji">🚀</span>
+              <span class="count">0</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stats Card -->
+      <article class="bento-item span-4 glass-card card-neon scroll-reveal">
+        <div class="project-card">
+          <h3 class="project-title">Quick Stats</h3>
+          <div class="stats-grid mt-2">
+            <div class="stat-card">
+              <div class="stat-number" id="repoCount">10+</div>
+              <div class="stat-label">Repositories</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="starsCount">50+</div>
+              <div class="stat-label">Stars</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="projectCount">8+</div>
+              <div class="stat-label">Projects</div>
+            </div>
+          </div>
+          <a href="stats.html" class="btn btn-secondary btn-magnetic mt-2" style="width: 100%;">
+            View Detailed Stats
+          </a>
+        </div>
+      </article>
+
+      <!-- Dark Userbot Project -->
+      <article class="bento-item span-6 glass-card card-sweep card-spotlight tilt-3d scroll-reveal" data-project="dark-userbot">
+        <div class="tilt-3d-inner project-card">
+          <div class="project-icon" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+            <img src="logo/dark-userbot-3d.svg" alt="" width="36" height="36" loading="lazy">
+          </div>
+          <h2 class="project-title">Dark Userbot</h2>
+          <p class="project-description">
+            A powerful and feature-rich Telegram userbot built with Python. 
+            Automate tasks, enhance your Telegram experience, and unlock advanced features.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Telegram</span>
+            <span class="tag">Automation</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/DenxVil/DARK-USERBOT" class="btn btn-secondary btn-magnetic" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              <span>View on GitHub</span>
+            </a>
+          </div>
+          <div class="reactions" data-project="dark-userbot">
+            <button class="reaction-btn" data-reaction="love" aria-label="Love this project">
+              <span class="emoji">❤️</span>
+              <span class="count">0</span>
+            </button>
+            <button class="reaction-btn" data-reaction="star" aria-label="Star this project">
+              <span class="emoji">⭐</span>
+              <span class="count">0</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pulse Protector Project -->
+      <article class="bento-item span-6 glass-card card-prism card-spotlight tilt-3d scroll-reveal" data-project="pulse-protector">
+        <div class="tilt-3d-inner project-card">
+          <div class="project-icon" style="background: linear-gradient(135deg, #ef4444, #f97316);">
+            <img src="logo/pulse-protector-3d.svg" alt="" width="36" height="36" loading="lazy">
+          </div>
+          <h2 class="project-title">Pulse Protector</h2>
+          <p class="project-description">
+            A health monitoring and emergency response application designed for medical 
+            professionals and patients. Track vitals, set alerts, and ensure safety.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Healthcare</span>
+            <span class="tag">IoT</span>
+            <span class="tag">Mobile App</span>
+          </div>
+          <div class="project-links">
+            <a href="pulse-protector.html" class="btn btn-secondary btn-magnetic">
+              Learn More
+            </a>
+          </div>
+          <div class="reactions" data-project="pulse-protector">
+            <button class="reaction-btn" data-reaction="love" aria-label="Love this project">
+              <span class="emoji">❤️</span>
+              <span class="count">0</span>
+            </button>
+            <button class="reaction-btn" data-reaction="clap" aria-label="Applaud this project">
+              <span class="emoji">👏</span>
+              <span class="count">0</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Timeline / Story Section -->
+      <article class="bento-item span-5 row-2 glass-card card-glow-edges scroll-reveal">
+        <div class="timeline-container">
+          <h3 class="project-title mb-2">
+            <img src="logo/timeline-icon.svg" alt="" width="24" height="24" style="vertical-align: middle; margin-right: 8px;" loading="lazy">
+            My Journey
+          </h3>
+          <div class="timeline" id="timeline">
+            <!-- Timeline items will be populated by JavaScript -->
+          </div>
+        </div>
+      </article>
+
+      <!-- About Card -->
+      <article class="bento-item span-7 glass-card card-holographic scroll-reveal">
+        <div class="project-card">
+          <h3 class="project-title">About Me</h3>
+          <p class="project-description">
+            I'm a medical student with a passion for technology and programming. 
+            I believe in leveraging technology to solve real-world problems, 
+            especially in the healthcare sector. My journey combines the precision 
+            of medicine with the creativity of software development.
+          </p>
+          <p class="project-description">
+            When I'm not studying anatomy or pharmacology, you'll find me coding 
+            new projects, exploring AI/ML technologies, or building tools that 
+            help people. I'm always open to collaborations and new ideas!
+          </p>
+          <div class="flex gap-2 mt-2">
+            <a href="https://github.com/DenxVil" class="btn btn-glass btn-magnetic" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a href="https://t.me/NexusAiProbot" class="btn btn-glass btn-magnetic" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+              <span>Telegram</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="nexus.html">Nexus AI</a>
+        <a href="stats.html">Stats</a>
+        <a href="https://github.com/DenxVil" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copyright">
+        &copy; <span id="currentYear">2025</span> Denvil. Built with ❤️ and lots of ☕
+      </p>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/magnetic.js" defer></script>
+  <script src="assets/js/reactions.js" defer></script>
+  <script src="assets/js/transitions.js" defer></script>
+  <script src="assets/js/timeline.js" defer></script>
+</body>
+</html>

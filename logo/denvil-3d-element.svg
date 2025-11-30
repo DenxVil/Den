@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="denvilGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#ec4899"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- 3D Effect Background -->
+  <ellipse cx="50" cy="85" rx="30" ry="8" fill="rgba(99, 102, 241, 0.2)"/>
+  
+  <!-- Main Shape -->
+  <path d="M50 10 L85 35 L85 65 L50 90 L15 65 L15 35 Z" 
+        fill="url(#denvilGrad)" 
+        filter="url(#glow)"
+        opacity="0.9"/>
+  
+  <!-- 3D Side -->
+  <path d="M50 90 L85 65 L85 70 L50 95 L15 70 L15 65 Z" 
+        fill="rgba(99, 102, 241, 0.6)"/>
+  
+  <!-- Letter D -->
+  <text x="50" y="60" 
+        text-anchor="middle" 
+        font-family="Arial, sans-serif" 
+        font-size="40" 
+        font-weight="bold" 
+        fill="white">D</text>
+</svg>

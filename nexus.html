@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nexus AI - Advanced AI-powered Telegram bot with intelligent conversations, image generation, and code assistance.">
+  <meta name="keywords" content="Nexus AI, Telegram Bot, AI Assistant, GPT, Image Generation, Code Assistant">
+  <meta name="author" content="Denvil">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="logo/nexus-ai-3d.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <title>Nexus AI - Denvil</title>
+  
+  <style>
+    .nexus-hero {
+      text-align: center;
+      padding: 4rem 0;
+      position: relative;
+    }
+    
+    .nexus-hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+      filter: blur(60px);
+      z-index: -1;
+    }
+    
+    .nexus-logo {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 2rem;
+      padding: 2rem;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      box-shadow: 0 20px 60px var(--accent-glow);
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    .nexus-logo img {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    
+    .feature-card {
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-glass);
+      border-radius: 16px;
+      font-size: 1.75rem;
+    }
+    
+    .feature-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .command-section {
+      margin: 3rem 0;
+    }
+    
+    .command-list {
+      display: grid;
+      gap: 1rem;
+    }
+    
+    .command-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--border-glass);
+    }
+    
+    .command-name {
+      font-family: 'Monaco', 'Menlo', monospace;
+      background: var(--accent-primary);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+    
+    .command-desc {
+      color: var(--text-secondary);
+    }
+    
+    .cta-section {
+      text-align: center;
+      padding: 4rem 2rem;
+      margin: 3rem 0;
+      background: linear-gradient(135deg, var(--bg-glass) 0%, rgba(99, 102, 241, 0.1) 100%);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border-glass);
+    }
+    
+    .cta-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-description {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .telegram-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      padding: 1rem 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="background-effects" aria-hidden="true">
+    <div class="gradient-mesh"></div>
+    <div class="aurora"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="liquid-blob"></div>
+    <div class="particles-container" id="particles"></div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition"></div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Navigation -->
+    <header>
+      <nav class="nav-header" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="nav-logo" aria-label="Denvil Home">
+          <img src="logo/denvil-3d-element.svg" alt="" width="50" height="50" loading="eager">
+          <span>Denvil</span>
+        </a>
+        
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="nexus.html" class="active">Nexus AI</a></li>
+          <li><a href="stats.html">Stats</a></li>
+        </ul>
+        
+        <div class="flex items-center gap-2">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.8.8 0 0 1-.8.8h-2.4a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zM4 12a.8.8 0 0 1-.8.8H.8a.8.8 0 0 1 0-1.6h2.4a.8.8 0 0 1 .8.8zm16.5-8.5a.8.8 0 0 1 0 1.1l-1.7 1.7a.8.8 0 1 1-1.1-1.1l1.7-1.7a.8.8 0 0 1 1.1 0zm-15 15a.8.8 0 0 1 0 1.1l-1.7 1.7a.8.8 0 0 1-1.1-1.1l1.7-1.7a.8.8 0 0 1 1.1 0zM20.5 20.5a.8.8 0 0 1-1.1 0l-1.7-1.7a.8.8 0 0 1 1.1-1.1l1.7 1.7a.8.8 0 0 1 0 1.1zM5.5 5.5a.8.8 0 0 1-1.1 0L2.7 3.8a.8.8 0 0 1 1.1-1.1l1.7 1.7a.8.8 0 0 1 0 1.1zM12 0a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0V.8A.8.8 0 0 1 12 0zm0 20a.8.8 0 0 1 .8.8v2.4a.8.8 0 0 1-1.6 0v-2.4a.8.8 0 0 1 .8-.8z"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.1 22c-5 0-9.1-4.1-9.1-9.1 0-4.7 3.5-8.6 8.2-9.2.3 0 .6.1.8.4.2.3.1.6-.1.9-1.4 2-1.8 4.4-1 6.7s2.8 4.1 5.2 4.8c.4.1.7.4.6.8-.1.4-.3.7-.7.8-1.2.6-2.5.9-3.9.9zm-1.8-16c-2.8 1.1-4.8 3.9-4.8 7 0 4.1 3.4 7.5 7.5 7.5.9 0 1.8-.2 2.6-.5-2-.9-3.6-2.6-4.3-4.7-.7-2.1-.5-4.3.5-6.3z"/>
+            </svg>
+          </button>
+          
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="nexus-hero scroll-reveal">
+        <div class="nexus-logo">
+          <img src="logo/nexus-ai-3d.svg" alt="Nexus AI Logo" loading="eager">
+        </div>
+        <h1 class="hero-title">
+          <span class="text-gradient">Nexus AI</span>
+        </h1>
+        <p class="hero-subtitle">
+          Your intelligent AI companion on Telegram. Experience the future of 
+          AI-powered conversations, image generation, and code assistance.
+        </p>
+        <div class="flex justify-center gap-2 mt-3">
+          <a href="https://t.me/NexusAiProbot" class="btn btn-primary btn-magnetic telegram-link" target="_blank" rel="noopener noreferrer">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            <span>Start Chat with @NexusAiProbot</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Features Grid -->
+      <section class="feature-grid scroll-reveal">
+        <article class="glass-card feature-card card-holographic">
+          <div class="feature-icon">🤖</div>
+          <h3 class="feature-title">Intelligent Conversations</h3>
+          <p class="feature-description">
+            Powered by cutting-edge language models for natural, context-aware conversations 
+            on any topic you can imagine.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-holographic">
+          <div class="feature-icon">🎨</div>
+          <h3 class="feature-title">AI Image Generation</h3>
+          <p class="feature-description">
+            Create stunning images from text descriptions. Transform your imagination 
+            into visual art instantly.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-holographic">
+          <div class="feature-icon">💻</div>
+          <h3 class="feature-title">Code Assistant</h3>
+          <p class="feature-description">
+            Get help with coding problems, debug issues, and learn new programming 
+            concepts with AI guidance.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-holographic">
+          <div class="feature-icon">🌐</div>
+          <h3 class="feature-title">Translation Services</h3>
+          <p class="feature-description">
+            Translate text between multiple languages with high accuracy and 
+            natural-sounding results.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-holographic">
+          <div class="feature-icon">📝</div>
+          <h3 class="feature-title">Content Creation</h3>
+          <p class="feature-description">
+            Generate articles, stories, summaries, and creative content with 
+            AI-powered writing assistance.
+          </p>
+        </article>
+
+        <article class="glass-card feature-card card-holographic">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Instant Responses</h3>
+          <p class="feature-description">
+            Get quick answers and solutions without waiting. Nexus AI responds 
+            in seconds, 24/7.
+          </p>
+        </article>
+      </section>
+
+      <!-- Commands Section -->
+      <section class="command-section glass-card scroll-reveal">
+        <h2 class="project-title mb-2">Available Commands</h2>
+        <p class="text-secondary mb-3">
+          Interact with Nexus AI using these simple commands. Just send them in your chat!
+        </p>
+        <div class="command-list">
+          <div class="command-item">
+            <span class="command-name">/start</span>
+            <span class="command-desc">Begin your conversation with Nexus AI and get a welcome message with instructions.</span>
+          </div>
+          <div class="command-item">
+            <span class="command-name">/ask [question]</span>
+            <span class="command-desc">Ask any question and get an intelligent AI-powered response.</span>
+          </div>
+          <div class="command-item">
+            <span class="command-name">/imagine [prompt]</span>
+            <span class="command-desc">Generate an AI image based on your text description.</span>
+          </div>
+          <div class="command-item">
+            <span class="command-name">/code [language] [problem]</span>
+            <span class="command-desc">Get coding help, examples, and solutions in any programming language.</span>
+          </div>
+          <div class="command-item">
+            <span class="command-name">/translate [text]</span>
+            <span class="command-desc">Translate text between languages. Auto-detects source language.</span>
+          </div>
+          <div class="command-item">
+            <span class="command-name">/summarize [text/url]</span>
+            <span class="command-desc">Get a concise summary of long texts or web articles.</span>
+          </div>
+          <div class="command-item">
+            <span class="command-name">/help</span>
+            <span class="command-desc">View all available commands and usage instructions.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Use Cases Section -->
+      <section class="bento-grid scroll-reveal">
+        <article class="bento-item span-6 glass-card card-sweep">
+          <div class="project-card">
+            <h3 class="project-title">For Students</h3>
+            <p class="project-description">
+              Get homework help, understand complex concepts, practice language skills, 
+              and prepare for exams with an AI tutor available anytime.
+            </p>
+            <ul style="color: var(--text-secondary); margin-top: 1rem;">
+              <li>✓ Math problem solving</li>
+              <li>✓ Essay writing assistance</li>
+              <li>✓ Language learning</li>
+              <li>✓ Research help</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="bento-item span-6 glass-card card-sweep">
+          <div class="project-card">
+            <h3 class="project-title">For Developers</h3>
+            <p class="project-description">
+              Debug code, understand algorithms, get code reviews, and learn new 
+              programming languages with AI-powered assistance.
+            </p>
+            <ul style="color: var(--text-secondary); margin-top: 1rem;">
+              <li>✓ Code debugging</li>
+              <li>✓ Algorithm explanations</li>
+              <li>✓ API documentation help</li>
+              <li>✓ Best practices guidance</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section scroll-reveal">
+        <h2 class="cta-title text-gradient">Ready to Get Started?</h2>
+        <p class="cta-description">
+          Join thousands of users who are already experiencing the power of 
+          Nexus AI. Start your journey today - it's completely free!
+        </p>
+        <a href="https://t.me/NexusAiProbot" class="btn btn-primary btn-magnetic telegram-link" target="_blank" rel="noopener noreferrer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+          </svg>
+          <span>Chat with @NexusAiProbot</span>
+        </a>
+      </section>
+
+      <!-- Project Reactions -->
+      <section class="glass-card scroll-reveal" style="text-align: center; padding: 2rem;">
+        <h3 class="project-title">What do you think of Nexus AI?</h3>
+        <div class="reactions" data-project="nexus-ai" style="justify-content: center; margin-top: 1rem;">
+          <button class="reaction-btn" data-reaction="love" aria-label="Love this project">
+            <span class="emoji">❤️</span>
+            <span class="count">0</span>
+          </button>
+          <button class="reaction-btn" data-reaction="fire" aria-label="This is fire">
+            <span class="emoji">🔥</span>
+            <span class="count">0</span>
+          </button>
+          <button class="reaction-btn" data-reaction="rocket" aria-label="To the moon">
+            <span class="emoji">🚀</span>
+            <span class="count">0</span>
+          </button>
+          <button class="reaction-btn" data-reaction="star" aria-label="Star this project">
+            <span class="emoji">⭐</span>
+            <span class="count">0</span>
+          </button>
+          <button class="reaction-btn" data-reaction="clap" aria-label="Applaud">
+            <span class="emoji">👏</span>
+            <span class="count">0</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="nexus.html">Nexus AI</a>
+        <a href="stats.html">Stats</a>
+        <a href="https://github.com/DenxVil" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="footer-copyright">
+        &copy; <span id="currentYear">2025</span> Denvil. Built with ❤️ and lots of ☕
+      </p>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/magnetic.js" defer></script>
+  <script src="assets/js/reactions.js" defer></script>
+  <script src="assets/js/transitions.js" defer></script>
+</body>
+</html>
