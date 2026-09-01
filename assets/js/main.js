@@ -1,379 +1,301 @@
-/**
- * Main JavaScript for Denvil Portfolio
- * Handles core functionality, theme toggle, navigation, and animations
- */
-
-(function() {
+(function () {
   'use strict';
 
-  // DOM Elements
-  const themeToggle = document.getElementById('themeToggle');
-  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-  const navLinks = document.getElementById('navLinks');
-  const particles = document.getElementById('particles');
-  const currentYear = document.getElementById('currentYear');
-  const typewriter = document.getElementById('typewriter');
+  const data = window.portfolioData;
+  if (!data) return;
 
-  // Configuration
-  const config = {
-    particleCount: 50,
-    typewriterTexts: [
-      'Medical Student & Developer',
-      'Building the Future',
-      'Creating with Code',
-      'Innovating in Healthcare'
-    ],
-    typewriterSpeed: 100,
-    typewriterPause: 2000
-  };
+  const root = document.documentElement;
 
-  /**
-   * Theme Management
-   */
-  const ThemeManager = {
-    storageKey: 'denvil-theme',
-    
-    init() {
-      const savedTheme = localStorage.getItem(this.storageKey);
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-      this.setTheme(theme);
-      
-      if (themeToggle) {
-        themeToggle.addEventListener('click', () => this.toggle());
+  function setYear() {
+    const year = document.getElementById('currentYear');
+    if (year) year.textContent = String(new Date().getFullYear());
+  }
+
+  function setProfile() {
+    const profile = data.profile;
+    document.querySelectorAll('[data-name]').forEach((el) => (el.textContent = profile.name));
+    document.querySelectorAll('[data-identity]').forEach((el) => (el.textContent = profile.identity));
+    document.querySelectorAll('[data-title]').forEach((el) => (el.textContent = profile.title));
+    document.querySelectorAll('[data-axis]').forEach((el) => (el.textContent = profile.axis));
+    document.querySelectorAll('[data-statement]').forEach((el) => (el.textContent = profile.statement));
+  }
+
+  function renderNav() {
+    const list = document.getElementById('navLinks');
+    if (!list) return;
+    list.innerHTML = data.nav
+      .map((item) => `<li><a href="#${item.id}">${item.label}</a></li>`)
+      .join('');
+  }
+
+  function renderAbout() {
+    const wrap = document.getElementById('aboutFrames');
+    if (!wrap) return;
+    wrap.innerHTML = data.aboutFrames
+      .map(
+        (item) => `
+      <article class="frame" data-reveal>
+        <div class="frame-inner">
+          <p class="info-label">${item.title}</p>
+          <p class="info-value">${item.detail}</p>
+        </div>
+      </article>`
+      )
+      .join('');
+  }
+
+  function projectCard(project) {
+    const actions = [];
+    if (project.links.caseStudy) actions.push(`<a class="btn btn-secondary" href="${project.links.caseStudy}">Case Study ↗</a>`);
+    if (project.links.live) actions.push(`<a class="btn btn-secondary" href="${project.links.live}" target="_blank" rel="noopener noreferrer">Live ↗</a>`);
+    if (project.links.github) actions.push(`<a class="btn btn-secondary" href="${project.links.github}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>`);
+
+    return `
+    <article class="frame project-frame" data-reveal>
+      <div class="frame-inner">
+        <div class="project-head">
+          <span class="project-index">Project ${project.number}</span>
+          <span aria-hidden="true">↗</span>
+        </div>
+        <h3 class="project-title">${project.title}</h3>
+        <p class="project-subtitle">${project.subtitle}</p>
+        <div class="tag-row">${project.category
+          .split('·')
+          .map((x) => `<span class="tag">${x.trim()}</span>`)
+          .join('')}</div>
+        <p class="project-description">${project.description}</p>
+        ${project.disclaimer ? `<p class="note"><strong>${project.disclaimer}</strong></p>` : ''}
+        <div class="project-actions">${actions.join('')}</div>
+      </div>
+    </article>`;
+  }
+
+  function renderFeatured() {
+    const featured = data.projects.find((p) => p.highlight);
+    const wrap = document.getElementById('featuredProject');
+    if (!featured || !wrap) return;
+
+    wrap.innerHTML = `
+      <div class="featured-head">
+        <div>
+          <p class="index-badge">Project ${featured.number}</p>
+          <h3 class="featured-title">${featured.title}</h3>
+          <p class="project-subtitle">${featured.subtitle}</p>
+          <div class="tag-row">${featured.category
+            .split('·')
+            .map((x) => `<span class="tag">${x.trim()}</span>`)
+            .join('')}</div>
+        </div>
+        <div class="achievement-badge">
+          <strong>🥈 ${featured.achievement}</strong>
+          <span class="note">Catalyst Hackathon 2025</span>
+        </div>
+      </div>
+      <div class="featured-body">
+        <div class="visual-panel">
+          <p class="info-label">Triaged Parameters</p>
+          <div class="vital-grid">
+            <div class="vital-item"><div class="vital-name">Heart Rate</div><div class="vital-status">Monitored</div></div>
+            <div class="vital-item"><div class="vital-name">Respiratory Rate</div><div class="vital-status">Monitored</div></div>
+            <div class="vital-item"><div class="vital-name">SpO2</div><div class="vital-status">Monitored</div></div>
+            <div class="vital-item"><div class="vital-name">Blood Pressure</div><div class="vital-status">Monitored</div></div>
+            <div class="vital-item"><div class="vital-name">GCS</div><div class="vital-status">Scored</div></div>
+            <div class="vital-item"><div class="vital-name">Pupillary</div><div class="vital-status">Assessed</div></div>
+          </div>
+          <div class="arch-lines" aria-label="Architecture overview">
+            <div class="arch-line">Input simulation → Triage layer</div>
+            <div class="arch-line">Weighted scoring → Confidence output</div>
+            <div class="arch-line">Intervention recommendations</div>
+          </div>
+        </div>
+        <div class="case-points">
+          <div class="case-point"><h4>The Idea</h4><p>${featured.idea}</p></div>
+          <div class="case-point"><h4>The Problem</h4><p>${featured.problem}</p></div>
+          <div class="case-point"><h4>The Approach</h4><p>${featured.approach}</p></div>
+          <div class="case-point"><h4>My Contribution</h4><p>${featured.contribution}</p></div>
+          <div class="case-point"><h4>Result / Achievement</h4><p>${featured.result}</p></div>
+          <p class="note"><strong>${featured.disclaimer}</strong></p>
+          <div class="case-links">
+            <a class="btn btn-primary" href="${featured.links.live}" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
+            <a class="btn btn-secondary" href="${featured.links.github}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a class="btn btn-secondary" href="${featured.links.caseStudy}">Full Case Study ↗</a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderProjects() {
+    const wrap = document.getElementById('projectCards');
+    if (!wrap) return;
+    wrap.innerHTML = data.projects.filter((p) => !p.highlight).map(projectCard).join('');
+  }
+
+  function renderAchievements() {
+    const wrap = document.getElementById('achievementCards');
+    if (!wrap) return;
+    wrap.innerHTML = data.achievements
+      .map(
+        (a) => `<article class="frame" data-reveal><div class="frame-inner"><div class="metric-number">${a.value}</div><div class="metric-label"><strong>${a.label}</strong><br>${a.detail}</div></div></article>`
+      )
+      .join('');
+  }
+
+  function renderEducation() {
+    const timeline = document.getElementById('educationTimeline');
+    if (!timeline) return;
+    timeline.innerHTML = data.education
+      .map(
+        (item) => `<article class="timeline-item" data-reveal><div class="timeline-stage">${item.stage}</div><h3 class="timeline-title">${item.title}</h3><p class="timeline-desc">${item.detail}</p></article>`
+      )
+      .join('');
+  }
+
+  function renderJourney() {
+    const wrap = document.getElementById('journeySteps');
+    if (!wrap) return;
+    wrap.innerHTML = data.journey
+      .map((step) => `<article class="journey-step" data-reveal><span>${step.stage}</span><strong>${step.text}</strong></article>`)
+      .join('');
+  }
+
+  function renderTech() {
+    const wrap = document.getElementById('techCards');
+    if (!wrap) return;
+    wrap.innerHTML = Object.entries(data.technologies)
+      .map(
+        ([title, items]) => `<article class="tech-card" data-reveal><h3>${title}</h3><ul class="tech-list">${items
+          .map((item) => `<li>${item}</li>`)
+          .join('')}</ul></article>`
+      )
+      .join('');
+  }
+
+  function renderContact() {
+    const wrap = document.getElementById('contactLinks');
+    if (!wrap) return;
+    const links = [
+      { label: 'GitHub', href: data.profile.github, value: '@DenxVil' },
+      {
+        label: 'LinkedIn',
+        href: data.profile.linkedIn || '#',
+        value: data.profile.linkedIn ? 'Verified profile' : 'Placeholder — add verified URL',
+        disabled: !data.profile.linkedIn
+      },
+      {
+        label: 'Email',
+        href: data.profile.email ? `mailto:${data.profile.email}` : '#',
+        value: data.profile.email || 'Placeholder — add preferred email',
+        disabled: !data.profile.email
       }
-      
-      // Listen for system theme changes
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem(this.storageKey)) {
-          this.setTheme(e.matches ? 'dark' : 'light');
-        }
-      });
-    },
-    
-    setTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem(this.storageKey, theme);
-    },
-    
-    toggle() {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      this.setTheme(newTheme);
-    },
-    
-    get() {
-      return document.documentElement.getAttribute('data-theme') || 'dark';
+    ];
+
+    wrap.innerHTML = links
+      .map(
+        (item) => `<a class="contact-link" ${item.disabled ? 'aria-disabled="true"' : ''} href="${item.href}" ${
+          item.disabled ? '' : 'target="_blank" rel="noopener noreferrer"'
+        }><strong>${item.label}</strong><span class="note">${item.value}</span></a>`
+      )
+      .join('');
+  }
+
+  function navBehavior() {
+    const header = document.querySelector('.site-header');
+    window.addEventListener(
+      'scroll',
+      () => {
+        header && header.classList.toggle('scrolled', window.scrollY > 8);
+      },
+      { passive: true }
+    );
+
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('navLinks');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    nav.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLAnchorElement) {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function reveal() {
+    const elements = document.querySelectorAll('[data-reveal]');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      elements.forEach((el) => el.classList.add('revealed'));
+      return;
     }
-  };
 
-  /**
-   * Mobile Navigation
-   */
-  const MobileNav = {
-    init() {
-      if (mobileMenuToggle && navLinks) {
-        mobileMenuToggle.addEventListener('click', () => this.toggle());
-        
-        // Close menu when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => this.close());
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-          if (!navLinks.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-            this.close();
-          }
-        });
-      }
-    },
-    
-    toggle() {
-      const isOpen = navLinks.classList.toggle('active');
-      mobileMenuToggle.setAttribute('aria-expanded', isOpen);
-    },
-    
-    close() {
-      navLinks.classList.remove('active');
-      mobileMenuToggle.setAttribute('aria-expanded', 'false');
-    }
-  };
-
-  /**
-   * Particle Effect
-   */
-  const ParticleEffect = {
-    init() {
-      if (!particles || this.prefersReducedMotion()) return;
-      
-      for (let i = 0; i < config.particleCount; i++) {
-        this.createParticle();
-      }
-    },
-    
-    createParticle() {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = `${Math.random() * 100}%`;
-      particle.style.top = `${Math.random() * 100}%`;
-      particle.style.animationDelay = `${Math.random() * 3}s`;
-      particle.style.animationDuration = `${2 + Math.random() * 3}s`;
-      particles.appendChild(particle);
-    },
-    
-    prefersReducedMotion() {
-      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
-  };
-
-  /**
-   * Scroll Reveal Animation
-   */
-  const ScrollReveal = {
-    elements: [],
-    
-    init() {
-      this.elements = document.querySelectorAll('.scroll-reveal');
-      
-      if (this.elements.length === 0) return;
-      
-      // Check if reduced motion is preferred
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        this.elements.forEach(el => el.classList.add('revealed'));
-        return;
-      }
-      
-      // Use Intersection Observer
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
+            io.unobserve(entry.target);
           }
         });
-      }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      });
-      
-      this.elements.forEach(el => observer.observe(el));
-    }
-  };
-
-  /**
-   * Spotlight Effect for Cards
-   */
-  const SpotlightEffect = {
-    init() {
-      const cards = document.querySelectorAll('.card-spotlight');
-      
-      cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width) * 100;
-          const y = ((e.clientY - rect.top) / rect.height) * 100;
-          card.style.setProperty('--x', `${x}%`);
-          card.style.setProperty('--y', `${y}%`);
-        });
-      });
-    }
-  };
-
-  /**
-   * 3D Tilt Effect
-   */
-  const TiltEffect = {
-    init() {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      
-      const cards = document.querySelectorAll('.tilt-3d');
-      
-      cards.forEach(card => {
-        const inner = card.querySelector('.tilt-3d-inner');
-        if (!inner) return;
-        
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          
-          const rotateX = (y - centerY) / 20;
-          const rotateY = (centerX - x) / 20;
-          
-          inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-        
-        card.addEventListener('mouseleave', () => {
-          inner.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        });
-      });
-    }
-  };
-
-  /**
-   * Typewriter Effect
-   */
-  const TypewriterEffect = {
-    currentIndex: 0,
-    currentText: '',
-    isDeleting: false,
-    
-    init() {
-      if (!typewriter) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        typewriter.textContent = config.typewriterTexts[0];
-        return;
-      }
-      
-      this.type();
-    },
-    
-    type() {
-      const fullText = config.typewriterTexts[this.currentIndex];
-      
-      if (this.isDeleting) {
-        this.currentText = fullText.substring(0, this.currentText.length - 1);
-      } else {
-        this.currentText = fullText.substring(0, this.currentText.length + 1);
-      }
-      
-      typewriter.textContent = this.currentText;
-      
-      let typeSpeed = this.isDeleting ? config.typewriterSpeed / 2 : config.typewriterSpeed;
-      
-      if (!this.isDeleting && this.currentText === fullText) {
-        typeSpeed = config.typewriterPause;
-        this.isDeleting = true;
-      } else if (this.isDeleting && this.currentText === '') {
-        this.isDeleting = false;
-        this.currentIndex = (this.currentIndex + 1) % config.typewriterTexts.length;
-        typeSpeed = 500;
-      }
-      
-      setTimeout(() => this.type(), typeSpeed);
-    }
-  };
-
-  /**
-   * Text Scramble Effect
-   */
-  class TextScramble {
-    constructor(el) {
-      this.el = el;
-      this.chars = '!<>-_\\/[]{}—=+*^?#________';
-      this.update = this.update.bind(this);
-    }
-    
-    setText(newText) {
-      const oldText = this.el.innerText;
-      const length = Math.max(oldText.length, newText.length);
-      const promise = new Promise((resolve) => this.resolve = resolve);
-      this.queue = [];
-      
-      for (let i = 0; i < length; i++) {
-        const from = oldText[i] || '';
-        const to = newText[i] || '';
-        const start = Math.floor(Math.random() * 40);
-        const end = start + Math.floor(Math.random() * 40);
-        this.queue.push({ from, to, start, end });
-      }
-      
-      cancelAnimationFrame(this.frameRequest);
-      this.frame = 0;
-      this.update();
-      return promise;
-    }
-    
-    update() {
-      let output = '';
-      let complete = 0;
-      
-      for (let i = 0, n = this.queue.length; i < n; i++) {
-        let { from, to, start, end, char } = this.queue[i];
-        
-        if (this.frame >= end) {
-          complete++;
-          output += to;
-        } else if (this.frame >= start) {
-          if (!char || Math.random() < 0.28) {
-            char = this.chars[Math.floor(Math.random() * this.chars.length)];
-            this.queue[i].char = char;
-          }
-          output += `<span class="dud">${char}</span>`;
-        } else {
-          output += from;
-        }
-      }
-      
-      this.el.innerHTML = output;
-      
-      if (complete === this.queue.length) {
-        this.resolve();
-      } else {
-        this.frameRequest = requestAnimationFrame(this.update);
-        this.frame++;
-      }
-    }
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+    elements.forEach((el) => io.observe(el));
   }
 
-  /**
-   * Smooth Scroll
-   */
-  const SmoothScroll = {
-    init() {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-        });
-      });
-    }
-  };
+  function cursor() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const dot = document.querySelector('.cursor-dot');
+    if (!dot) return;
 
-  /**
-   * Update Current Year
-   */
-  function updateCurrentYear() {
-    if (currentYear) {
-      currentYear.textContent = new Date().getFullYear();
-    }
+    let rafId = 0;
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+
+    const draw = () => {
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+      rafId = 0;
+    };
+
+    document.addEventListener('pointermove', (event) => {
+      x = event.clientX;
+      y = event.clientY;
+      if (!rafId) rafId = requestAnimationFrame(draw);
+    });
+
+    const magnets = document.querySelectorAll('.btn, .contact-link');
+    magnets.forEach((element) => {
+      element.addEventListener('pointerenter', () => (dot.style.transform = 'translate(-50%, -50%) scale(1.45)'));
+      element.addEventListener('pointerleave', () => (dot.style.transform = 'translate(-50%, -50%) scale(1)'));
+    });
   }
 
-  /**
-   * Initialize All Modules
-   */
   function init() {
-    ThemeManager.init();
-    MobileNav.init();
-    ParticleEffect.init();
-    ScrollReveal.init();
-    SpotlightEffect.init();
-    TiltEffect.init();
-    TypewriterEffect.init();
-    SmoothScroll.init();
-    updateCurrentYear();
+    setYear();
+    setProfile();
+    renderNav();
+    renderAbout();
+    renderFeatured();
+    renderProjects();
+    renderAchievements();
+    renderEducation();
+    renderJourney();
+    renderTech();
+    renderContact();
+    navBehavior();
+    reveal();
+    cursor();
+    root.classList.add('js-ready');
   }
 
-  // Wait for DOM to be ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
-
-  // Expose utilities for other scripts
-  window.DenvilPortfolio = {
-    ThemeManager,
-    TextScramble
-  };
-
 })();
