@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://denx.me/sitemap.xml
